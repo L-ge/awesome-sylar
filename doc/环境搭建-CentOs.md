@@ -92,12 +92,11 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 :wq
 
 # source /etc/profile
-# vctags
 ```
 - 必须使用 VIM7.4 以上的版本才能正常显示C++11中的一些语法(lambda)
 - 该方式很容易导致文件大小是0，从而导致解压失败，你会发现目录下有一堆.1 .2 .3...这些文件。
 - ctags 生成c++ tags: ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
-- 为了方便使用在profile里面 alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
+- 为了方便使用，在profile里面 alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - 当代码有新的结构，函数定义后，执行一下 vctags ，就可以了。
 
 8. 安装bison
@@ -315,4 +314,16 @@ $ git status
 $ git push -u origin main
     # 位于分支 main
     无文件要提交，干净的工作区
+```
+
+20. 代码补全设置
+```
+1. 假设项目代码在 /home/bread/workspace/awesome-sylar，则在该目录下执行
+$ vctags
+会在该目录下生成 tags 文件
+
+2. 然后在 vim ~/.vimrc，在文件适当的位置加上
+set tags+=~/workspace/awesome-sylar
+
+3. vim insert模式下，Ctrl n就能全能补全。
 ```
