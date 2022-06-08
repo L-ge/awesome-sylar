@@ -54,8 +54,8 @@ yum -y install wget
 
 # yum install zsh
 # yum install git
-# sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"       // 国外
-# sh -c "$(wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh -O -)"      // 国内
+# sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"       // 国外---也是要普通用户执行，普通用户才能用。
+# sh -c "$(wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh -O -)"      // 国内---也是要普通用户执行，普通用户才能用。
 # echo $SHELL       // 查看当前默认的shell
 
 # chsh -s /bin/zsh      // 切换到zsh（注意：切换之后.bash_profile中的配置将不起作用,需要到.zshrc重新配置，或者把.bash_profile的内容复制到.zshrc里面）
@@ -76,15 +76,13 @@ yum -y install wget
 # make install
 # which vim
 
-# cd /home/bread                        // 在 soft 目录失败，切换了一个目录居然又可以了
+# cd /home/bread						
 # git clone https://github.com/sylar-yin/myvim.git
-# mv myvim /soft
-# cd /soft
-# cp myvim/.vim ~/ -rf
-# cp myvim/.vimrc ~/
+# cd myvim
+# cp .vim ~/ -rf						// 这些用普通用户的话，是拷贝到普通用户的根目录下。
+# cp .vimrc ~/							// 如果用root用户操作，那么最后vim在普通用户下没有相关配置。
 # find / -name ".vim"
 # find / -name ".vimrc"
-
 
 # vi /etc/profile
 
