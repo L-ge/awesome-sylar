@@ -316,7 +316,15 @@ $ git push -u origin main
     无文件要提交，干净的工作区
 ```
 
-20. 代码补全设置
+20. doxygen 使用
+```
+$ cd /home/bread/workspace/awesome-sylar
+$ doxygen -g -s         // 生成 Doxyfile 文件，-s为simple，-g为generate
+注意要修改 vim Doxyfile 其中的属性 RECURSIVE = YES
+$ doxygen               // 生成两个文件夹 html 和 latex
+```
+
+21. 代码补全设置
 ```
 1. 假设项目代码在 /home/bread/workspace/awesome-sylar，则在该目录下执行
 $ vctags
@@ -326,4 +334,29 @@ $ vctags
 set tags+=~/workspace/awesome-sylar
 
 3. vim insert模式下，Ctrl n就能全能补全。
+```
+
+22. 配置DoxygenToolkit.vim
+```
+$ git clone https://github.com/vim-scripts/DoxygenToolkit.vim
+$ cd DoxygenToolkit.vim
+$ cd plugin
+$ cp DoxygenToolkit.vim /home/bread/.vim/plugin
+
+// 然后在 ~/.vimrc 配置文件加上下面的内容：
+""DoxygenToolkit
+let g:DoxygenToolkit_briefTag_pre = "@brief\t"
+let g:DoxygenToolkit_paramTag_pre = "@param\t"
+let g:DoxygenToolkit_returnTag = "@return\t"
+let g:DoxygenToolkit_authorName="L-ge"
+let g:DoxygenToolkit_fileTag="@filename\t"
+let g:DoxygenToolkit_dateTag = "@modify\t"
+let g:DoxygenToolkit_classTag = "@class\t"
+let g:DoxygenToolkit_authorTag = "@author\t"
+
+
+完成后，可以在 vim normal 模式下输入 
+:Dox			// 函数参数
+:DoxAuthor		// 作者信息
+:DoxLic			// 许可声明
 ```
