@@ -243,11 +243,11 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - openssl
     ```
     yum install openssl-devel
-    ```    
+    ```
 - netstat
     ```
     yum install net-tools
-    ``` 
+    ```
 - protobuf
     ```
     // 用wget也行，但是地址太长了，因此在 https://github.com/protocolbuffers/protobuf/releases 里面找到 protobuf-all-21.1.tar.gz，然后拷贝到虚拟机。
@@ -314,6 +314,12 @@ $ git status
 $ git push -u origin main
     # 位于分支 main
     无文件要提交，干净的工作区
+
+8. git add之后发现add错了一个文件tags，则
+$ git reset HEAD tags
+
+9. 本地update远端的最新代码
+$ git pull origin main
 ```
 
 20. doxygen 使用
