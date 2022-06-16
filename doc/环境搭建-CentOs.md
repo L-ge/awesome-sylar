@@ -191,20 +191,37 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 # which cmake
 ```
 
-15. 安装yaml-cpp
+15. 安装boost库
 ```
+# yum -y install boost-devel
+```
+
+16. 安装yaml-cpp
+```
+方式一：下载的是最新版本0.7.0
+注：该方式在自己测试程序中用cmake编译失败(因为cmake用到的是系统自带的默认路径的g++ 4.8.5)，要用自己上面安装的g++9.1.0。
 # cd /soft
 # git clone https://github.com/jbeder/yaml-cpp.git
 # cd yaml-cpp
 # mkdir build
 # cd build
-# cmake ..
+# cmake .. -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/apps/bread
 # make -j4 & make install
-```
 
-16. 安装boost库
-```
-# yum -y install boost-devel
+方式二：下载的是无需依赖于boost的版本0.6.0
+通过 https://codeload.github.com/jbeder/yaml-cpp/tar.gz/refs/tags/yaml-cpp-0.6.0 下载得到 yaml-cpp-yaml-cpp-0.6.0.tar.gz，
+将 yaml-cpp-yaml-cpp-0.6.0.tar.gz 拷贝进虚拟机 /home/bread
+注：该方式在自己测试程序中用cmake编译成功(因为cmake用到的是系统自带的g++ 4.8.5)，用自己上面安装的g++9.1.0编译失败。
+# cd /home/bread
+# mv yaml-cpp-yaml-cpp-0.6.0.tar.gz /soft
+# cd /soft
+# tar xvf yaml-cpp-yaml-cpp-0.6.0.tar.gz
+# cd yaml-cpp-yaml-cpp-0.6.0
+# mkdir build
+# cd build
+# source /etc/profile
+# cmake .. -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/apps/bread
+# make -j4 & make install
 ```
 
 17. Ragel安装
