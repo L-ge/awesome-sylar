@@ -1,0 +1,14 @@
+logs:
+    - name: root
+      level: info
+      appenders:
+          - type: FileLogAppender
+            file: /home/bread/workspace/awesome-sylar/bin/root.txt
+          - type: StdoutLogAppender
+    - name: system
+      level: info
+      appenders:
+          - type: FileLogAppender
+            file: /home/bread/workspace/awesome-sylar/bin/system.txt
+          - type: StdoutLogAppender
+
