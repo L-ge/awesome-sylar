@@ -6,7 +6,7 @@
  * @modify  2022-06-11
  */
 #ifndef __SYLAR_LOG_H__
-#define __SYLAR_Log_H__
+#define __SYLAR_LOG_H__
 
 #include <string>
 #include <memory>
@@ -68,6 +68,9 @@ namespace sylar
 {
 class Logger;
 
+/**
+ * @brief   日志级别封装类
+ */
 class LogLevel
 {
 public:
@@ -86,6 +89,9 @@ public:
     static LogLevel::Level FromString(const std::string& str);
 };
 
+/**
+ * @brief  日志事件类 
+ */
 class LogEvent
 {
 public:
@@ -100,7 +106,6 @@ public:
              uint32_t fiberId,
              uint64_t time,
              const std::string& threadName);
-
 
     const char* getFile() const { return m_file; }
 
@@ -151,6 +156,9 @@ private:
     std::stringstream m_ss;
 };
 
+/**
+ * @brief   日志事件包装类
+ */
 class LogEventWrap
 {
 public:
@@ -166,6 +174,9 @@ private:
     LogEvent::ptr m_event;
 };
 
+/**
+ * @brief   日志格式类
+ */
 class LogFormatter
 {
 public:
@@ -178,6 +189,9 @@ public:
 std::ostream& format(std::ostream& ofs, std::shared_ptr<Logger> logger, LogLevel::Level level, LogEvent::ptr event);
 
 public:
+    /**
+    * @brief   日志内容格式化项
+    */
     class FormatItem
     {
     public:
@@ -200,6 +214,9 @@ private:
     bool m_error;
 };
 
+/**
+ * @brief   日志输出目的地类
+ */
 class LogAppender
 {
     friend class Logger;
@@ -226,6 +243,9 @@ protected:
     LogFormatter::ptr m_formatter;
 };
 
+/**
+ * @brief   标准化输出类
+ */
 class StdoutLogAppender : public LogAppender
 {
 public:
@@ -235,6 +255,9 @@ public:
     std::string toYamlString() override;
 };
 
+/**
+ * @brief   文件输出类
+ */
 class FileLogAppender : public LogAppender
 {
 public:
@@ -254,6 +277,9 @@ private:
     uint64_t m_lastTime;
 };
 
+/**
+ * @brief   日志器类
+ */
 class Logger : public std::enable_shared_from_this<Logger>
 {
     friend class LoggerManager;
@@ -292,6 +318,9 @@ private:
     Logger::ptr m_root;
 };
 
+/**
+ * @brief   日志管理器类
+ */
 class LoggerManager
 {
 public:

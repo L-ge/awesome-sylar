@@ -13,13 +13,18 @@
 #include <sys/types.h>
 #include <stdint.h>
 #include <sys/time.h>
+#include <string>
+#include <vector>
 
 namespace sylar
 {
 
 pid_t GetThreadId();
-
 uint32_t GetFiberId();
+
+std::string demangle(const char* str);
+void Backtrace(std::vector<std::string>& bt, int size, int skip);
+std::string BacktraceToString(int size = 64, int skip = 2, const std::string& prefix = "");
 
 }
 

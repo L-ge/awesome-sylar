@@ -136,7 +136,7 @@ private:
 /**
  * @brief   信号量
  */
-class Semaphore : public Noncopyable
+class Semaphore : private Noncopyable
 {
 public:
 
@@ -165,7 +165,7 @@ private:
     sem_t m_semaphore;
 };
 
-class Mutex : public Noncopyable
+class Mutex : private Noncopyable
 {
 public:
     typedef ScopedLockImpl<Mutex> Lock;
@@ -215,7 +215,7 @@ public:
         pthread_rwlock_rdlock(&m_lock);
     }
 
-    void rwlock()
+    void wrlock()
     {
         pthread_rwlock_wrlock(&m_lock);
     }

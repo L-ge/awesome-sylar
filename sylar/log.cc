@@ -1,4 +1,5 @@
 #include "log.h"
+#include "config.h"
 
 namespace sylar
 {
@@ -437,18 +438,18 @@ void LogFormatter::init()  //%xxx %xxx{xxx} %%
 #define XX(str, C) \
         {#str, [](const std::string& fmt) { return FormatItem::ptr(new C(fmt));}}
 
-        XX(m, MessageFormatItem),           //m:消息 
-        XX(p, LevelFormatItem),             //p:日志级别
-        XX(r, ElapseFormatItem),            //r:累计毫秒数
-        XX(c, NameFormatItem),              //c:日志名称
-        XX(t, ThreadIdFormatItem),          //t:线程id
-        XX(n, NewLineFormatItem),           //n:换行
-        XX(d, DateTimeFormatItem),          //d:时间
-        XX(f, FilenameFormatItem),          //f:文件名
-        XX(l, LineFormatItem),              //l:行号
-        XX(T, TabFormatItem),               //T:Tab
-        XX(F, FiberIdFormatItem),           //F:协程id
-        XX(N, ThreadNameFormatItem),        //N:线程名称
+        XX(m, MessageFormatItem),           // m:消息 
+        XX(p, LevelFormatItem),             // p:日志级别
+        XX(r, ElapseFormatItem),            // r:累计毫秒数
+        XX(c, NameFormatItem),              // c:日志名称
+        XX(t, ThreadIdFormatItem),          // t:线程id
+        XX(n, NewLineFormatItem),           // n:换行
+        XX(d, DateTimeFormatItem),          // d:时间
+        XX(f, FilenameFormatItem),          // f:文件名
+        XX(l, LineFormatItem),              // l:行号
+        XX(T, TabFormatItem),               // T:Tab
+        XX(F, FiberIdFormatItem),           // F:协程id
+        XX(N, ThreadNameFormatItem),        // N:线程名称
 #undef XX
     };
 
@@ -505,7 +506,20 @@ void StdoutLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level leve
 
 std::string StdoutLogAppender::toYamlString()
 {
-    return "";
+    MutexType::Lock lk(m_mutex);
+    YAML::Node node;
+    node["type"] = "StdoutLogAppender";
+    if(m_level != LogLevel::UNKNOW)
+    {
+        node["level"] = LogLevel::ToString(m_level);
+    }
+    if(m_hasFormatter && m_formatter)
+    {
+        node["formatter"] = m_formatter->getPattern();
+    }
+    std::stringstream ss;
+    ss << node;
+    return ss.str();
 }
 
 FileLogAppender::FileLogAppender(const std::string& filename)
@@ -536,7 +550,21 @@ void FileLogAppender::log(std::shared_ptr<Logger> logger, LogLevel::Level level,
 
 std::string FileLogAppender::toYamlString()
 {
-    return "";
+    MutexType::Lock lk(m_mutex);
+    YAML::Node node;
+    node["type"] = "FileLogAppender";
+    node["file"] = m_filename;
+    if(m_level != LogLevel::UNKNOW)
+    {
+        node["level"] = LogLevel::ToString(m_level);
+    }
+    if(m_hasFormatter && m_formatter)
+    {
+        node["formatter"] = m_formatter->getPattern();
+    }
+    std::stringstream ss;
+    ss << node;
+    return ss.str();
 }
 
 bool FileLogAppender::reopen()
@@ -668,7 +696,24 @@ LogFormatter::ptr Logger::getFormatter()
     
 std::string Logger::toYamlString()
 {
-    return "";
+    MutexType::Lock lk(m_mutex);
+    YAML::Node node;
+    node["name"] = m_name;
+    if(m_level != LogLevel::UNKNOW)
+    {
+        node["level"] = LogLevel::ToString(m_level);
+    }
+    if(m_formatter)
+    {
+        node["formatter"] = m_formatter->getPattern();
+    }
+    for(auto& i : m_appenders)
+    {
+        node["appenders"].push_back(YAML::Load(i->toYamlString()));
+    }
+    std::stringstream ss;
+    ss << node;
+    return ss.str();
 }
 
 LoggerManager::LoggerManager()
@@ -701,7 +746,15 @@ Logger::ptr LoggerManager::getLogger(const std::string& name)
 
 std::string LoggerManager::toYamlString()
 {
-    return "";
+    MutexType::Lock lk(m_mutex);
+    YAML::Node node;
+    for(auto& i : m_loggers)
+    {
+        node.push_back(YAML::Load(i.second->toYamlString()));
+    }
+    std::stringstream ss;
+    ss << node;
+    return ss.str();
 }
 
 }

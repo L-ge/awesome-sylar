@@ -16,6 +16,7 @@
 #include <cxxabi.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <vector>
 
 class FSUtil
 {
@@ -23,6 +24,7 @@ public:
     static bool Mkdir(const std::string& dirname);
     static std::string Dirname(const std::string& filename);
     static bool OpenForWrite(std::ofstream& ofs, const std::string& filename, std::ios_base::openmode mode);
+    static void ListAllFile(std::vector<std::string>& files, const std::string& path, const std::string& subfix);
 };
 
 #endif
