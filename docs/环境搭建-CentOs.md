@@ -337,6 +337,13 @@ $ git reset HEAD tags
 
 9. 本地update远端的最新代码
 $ git pull origin main
+
+10. 文件/文件夹重命名
+$ git mv oldname newname
+
+11. 比较更改内容
+$ git diff a.txt		// 比较工作区与暂存区的差异
+$ git diff HEAD a.txt	// 比较工作区与本地仓库的差异
 ```
 
 20. doxygen 使用
