@@ -37,5 +37,10 @@ add_executable(test_config tests/test_config.cc)
 add_dependencies(test_config sylar)
 target_link_libraries(test_config sylar)
 
+add_executable(test_thread tests/test_thread.cc)
+add_dependencies(test_thread sylar)
+target_link_libraries(test_thread sylar)
+
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
