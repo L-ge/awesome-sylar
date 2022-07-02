@@ -6,5 +6,9 @@
 #include "thread.h"
 #include "fiber.h"
 #include "scheduler.h"
+#include "iomanager.h"
+#include "timer.h"
+#include "fdmanager.h"
+#include "hook.h"
 
 #endif

@@ -1,6 +1,7 @@
 #include "scheduler.h"
 #include "fiber.h"
 #include "macro.h"
+#include "hook.h"
 
 namespace sylar
 {
@@ -188,7 +189,9 @@ void Scheduler::tickle()
 void Scheduler::run()
 {
     SYLAR_LOG_DEBUG(g_logger) << m_name << " run";
-    
+
+    set_hook_enable(true);  // 设置当前线程为hook的
+
     setThis();      // 设置当前调度器
 
     // 设置调度协程
