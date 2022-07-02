@@ -390,3 +390,8 @@ let g:DoxygenToolkit_authorTag = "@author\t"
 :DoxAuthor		// 作者信息
 :DoxLic			// 许可声明
 ```
+
+23. 安装 man 手册
+```
+$ sudo yum install man-pages
+```
