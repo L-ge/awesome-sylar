@@ -525,7 +525,7 @@ void IOManager::contextResize(size_t size)
 
 bool IOManager::stopping(uint64_t& timeout)
 {
-    timeout = getNextTimer();
+    timeout = getNextTimer();           // 获取下一个定时器的超时时间
     return timeout == ~0ull
         && m_pendingEventCount == 0     // 所有IO事件都完成调度
         && Scheduler::stopping();
