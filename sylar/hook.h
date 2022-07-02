@@ -1,3 +1,10 @@
+/**
+ * @filename    hook.h
+ * @brief   hook 模块
+ * @author  L-ge
+ * @version 0.1
+ * @modify  2022-07-03
+ */
 #ifndef __SYLAR_HOOK_H__
 #define __SYLAR_HOOK_H__
 
