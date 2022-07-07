@@ -29,6 +29,7 @@ set(LIB_SRC
     sylar/timer.cc
     sylar/hook.cc
     sylar/fdmanager.cc
+    sylar/address.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -56,6 +57,10 @@ target_link_libraries(test_iomanager sylar)
 add_executable(test_hook tests/test_hook.cc)
 add_dependencies(test_hook sylar)
 target_link_libraries(test_hook sylar)
+
+add_executable(test_address tests/test_address.cc)
+add_dependencies(test_address sylar)
+target_link_libraries(test_address sylar)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

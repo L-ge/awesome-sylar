@@ -239,7 +239,7 @@ int socket(int domain, int type, int protocol)
 {
     if(!sylar::t_hook_enable) 
     {
-        return socket(domain, type, protocol);
+        return socket_f(domain, type, protocol);
     }
     
     int fd = socket_f(domain, type, protocol);
