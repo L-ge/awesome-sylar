@@ -1,8 +1,13 @@
 #include "filestream_util.h"
 #include <dirent.h>
 
+namespace sylar
+{
+
 static int __lstat(const char* file, struct stat* st = nullptr)
 {
+    // lstat函数是获取参数file所指的文件状态，
+    // 当文件为符合链接时，该函数会返回该link本身的状态。
     struct stat lst;
     int ret = lstat(file, &lst);
     if(st)
@@ -136,4 +141,17 @@ void FSUtil::ListAllFile(std::vector<std::string>& files, const std::string& pat
         }
     }
     closedir(dir);
+}
+
+bool FSUtil::Unlink(const std::string& filename, bool exist)
+{
+    if(!exist && __lstat(filename.c_str()))
+    {
+        return false;
+    }
+    // unlink函数：从文件系统中删除一个名称。
+    // 如果名称是文件的最后一个连接，并且没有其他进程将文件打开，名称对应的文件会实际被删除。
+    return ::unlink(filename.c_str()) == 0;
+}
+
 }

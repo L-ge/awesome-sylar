@@ -18,6 +18,9 @@
 #include <string.h>
 #include <vector>
 
+namespace sylar
+{
+
 class FSUtil
 {
 public:
@@ -25,6 +28,9 @@ public:
     static std::string Dirname(const std::string& filename);
     static bool OpenForWrite(std::ofstream& ofs, const std::string& filename, std::ios_base::openmode mode);
     static void ListAllFile(std::vector<std::string>& files, const std::string& path, const std::string& subfix);
+    static bool Unlink(const std::string& filename, bool exist = false);
 };
+
+}
 
 #endif
