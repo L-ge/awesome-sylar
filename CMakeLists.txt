@@ -31,6 +31,7 @@ set(LIB_SRC
     sylar/fdmanager.cc
     sylar/address.cc
     sylar/socket.cc
+    sylar/bytearray.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -66,6 +67,10 @@ target_link_libraries(test_address sylar)
 add_executable(test_socket tests/test_socket.cc)
 add_dependencies(test_socket sylar)
 target_link_libraries(test_socket sylar)
+
+add_executable(test_bytearray tests/test_bytearray.cc)
+add_dependencies(test_bytearray sylar)
+target_link_libraries(test_bytearray sylar)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
