@@ -32,6 +32,11 @@ set(LIB_SRC
     sylar/address.cc
     sylar/socket.cc
     sylar/bytearray.cc
+    sylar/http/http.cc
+    sylar/util/string_util.cc
+    sylar/http/http_parser.cc
+    sylar/http/http11_parser.rl.cc
+    sylar/http/httpclient_parser.rl.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -71,6 +76,14 @@ target_link_libraries(test_socket sylar)
 add_executable(test_bytearray tests/test_bytearray.cc)
 add_dependencies(test_bytearray sylar)
 target_link_libraries(test_bytearray sylar)
+
+add_executable(test_http tests/test_http.cc)
+add_dependencies(test_http sylar)
+target_link_libraries(test_http sylar)
+
+add_executable(test_http_parser tests/test_http_parser.cc)
+add_dependencies(test_http_parser sylar)
+target_link_libraries(test_http_parser sylar)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
