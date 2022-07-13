@@ -1,5 +1,5 @@
 1. 安装虚拟机
-```
+```shell
 - 下载镜像
 - CentOS 7.6
 - CentOS-7-x86_64-Minimal-1810.iso
@@ -8,7 +8,7 @@
 ```
 
 2. 切换root用户
-```
+```shell
 - 输入 su 时候如果有鉴定故障，则
 $ sudo passwd root
 输入新的密码
@@ -17,14 +17,14 @@ $ su
 ```
 
 3. 创建存放软件包的目录
-```
+```shell
 # mkdir soft
 # cd soft
 ```
 - soft文件夹的绝对路径是 /soft。
 
 4. 创建软件安装目录并设置环境变量
-```
+```shell
 # mkdir apps
 # cd apps
 # mkdir bread           // bread 是用户名
@@ -43,13 +43,13 @@ export LD_LIBRARY_PATH=/apps/bread/lib:/apps/bread/lib64:$LD_LIBRARY_PATH
 - 将要用到的程序都安装到一个自定义路径，不会与系统路径冲突。可以多版本并存。（例如覆盖系统自带的gcc版本可能会有问题）。但需要将自定义的路径加入到PATH中。(我的自定义路径是/apps/bread)
 
 5. 安装 wget
-```
+```shell
 yum -y install wget
 (-y 选项是一路 yes 的意思)
 ```
 
 6. 安装 ohmyzsh
-```
+```shell
 百度 https://ohmyz.sh/ 找到 wget 方式的连接。
 
 # yum install zsh
@@ -62,7 +62,7 @@ yum -y install wget
 ```
 
 7. 安装 Vim
-```
+```shell
 # yum install gcc gcc-c++               // ./configure需要用到，安装到的是 4.8.5 版本
 # yum install ncurses-devel             // vim的依赖
 # yum install ctags                     // C++的一些链接提示
@@ -100,13 +100,13 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - 当代码有新的结构，函数定义后，执行一下 vctags ，就可以了。
 
 8. 安装bison
-```
+```shell
 # yum -y install bison
 ```
 - 没有安装bison，编译中会提示 “WARNING: ‘bison’ is missing on your system.”
 
 9. 安装texinfo
-```
+```shell
 # yum -y install texinfo
 
 // 如果报没有这个包时，网上说可以：
@@ -118,7 +118,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - 也可以在 http://ftp.gnu.org/gnu/texinfo/ 里面找相应的包，然后用 wget 获取安装。
 
 10. 安装autoconf
-```
+```shell
 # wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz
 # tar xvf autoconf-2.69.tar.gz
 # cd autoconf-2.69
@@ -130,7 +130,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - gcc安装需要依赖automake-1.15以上版本，automake-1.15以上版本，需要依赖autoconf 2.69
 
 11. 安装automake
-```
+```shell
 # wget http://ftp.gnu.org/gnu/automake/automake-1.15.tar.gz
 # tar xvf automake-1.15.tar.gz
 # cd automake-1.15
@@ -147,7 +147,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - gcc安装需要依赖automake-1.15以上版本
 
 12. GCC 安装
-```
+```shell
 # wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-9.1.0/gcc-9.1.0.tar.xz
 # tar xvJf gcc-9.1.0.tar.xz               // -j是调用bzip2解缩文件
 # cd gcc-9.1.0
@@ -169,7 +169,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - GCC安装的时间会比较长，大概半小时~2小时，取决于机器性能，需要耐心等待
 
 13. GDB安装
-```
+```shell
 # wget http://ftp.gnu.org/gnu/gdb/gdb-8.3.tar.xz
 # tar xvf gdb-8.3.tar.xz
 # cd gdb-8.3
@@ -181,7 +181,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 - 由于8.3版本需要依赖gcc支持c++11，gdb必须等gcc安装完之后再安装
 
 14. CMake安装
-```
+```shell
 # wget https://github.com/Kitware/CMake/releases/download/v3# .14.5/cmake-3.14.5.tar.gz
 # tar xvf cmake-3.14.5.tar.gz
 # cd cmake-3.14.5
@@ -192,12 +192,12 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 ```
 
 15. 安装boost库
-```
+```shell
 # yum -y install boost-devel
 ```
 
 16. 安装yaml-cpp
-```
+```shell
 方式一：下载的是最新版本0.7.0
 注：该方式在自己测试程序中用cmake编译失败(因为cmake用到的是系统自带的默认路径的g++ 4.8.5)，要用自己上面安装的g++9.1.0。
 # cd /soft
@@ -225,7 +225,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 ```
 
 17. Ragel安装
-```
+```shell
 # wget http://www.colm.net/files/ragel/ragel-6.10.tar.gz
 # tar xvf ragel-6.10.tar.gz
 # cd ragel-6.10
@@ -237,20 +237,20 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 
 18. 其他安装
 - apache2-utils：Apache压力(并发)测试工具ab
-    ```
+    ```shell
     # yum -y install httpd-tools
     # ab -n 100 -c 10 http://www.baidu.com/               // 注意网址最后要带斜杠
     ```
 - graphviz：一种dot工具可以用来渲染出效果更好的图表
-    ```
+    ```shell
     yum install graphviz
     ```
 - doxygen：编写软件参考文档的工具
-    ```
+    ```shell
     yum -y install doxygen doxygen-latex doxygen-doxywizard
     ```
 - psmisc：
-    ```
+    ```shell
     yum install psmisc
     ```
     - Psmisc软件包包含三个帮助管理/proc目录的程序。
@@ -258,15 +258,15 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
         - killall 杀死某个名字的进程，它向运行指定命令的所有进程发出信号。
         - pstree 树型显示当前运行的进程。
 - openssl
-    ```
+    ```shell
     yum install openssl-devel
     ```
 - netstat
-    ```
+    ```shell
     yum install net-tools
     ```
 - protobuf
-    ```
+    ```shell
     // 用wget也行，但是地址太长了，因此在 https://github.com/protocolbuffers/protobuf/releases 里面找到 protobuf-all-21.1.tar.gz，然后拷贝到虚拟机。
     // 先拷贝到 /home/bread 目录，然后再sudo mv 到 soft 目录。
     # tar -zxvf protobuf-all-21.1.tar.gz
@@ -299,7 +299,7 @@ alias vctags="ctags -R --c++-kinds=+p --fields=+iaS --extra=+q"
 ---
 
 19. git 配置
-```
+```shell
 1. 设置Git的user name和email
 $ git config --global user.name "你GitHub用户名"
 $ git config --global user.email "你GitHub的邮箱"
@@ -342,12 +342,13 @@ $ git pull origin main
 $ git mv oldname newname
 
 11. 比较更改内容
-$ git diff a.txt		// 比较工作区与暂存区的差异
-$ git diff HEAD a.txt	// 比较工作区与本地仓库的差异
+$ git diff a.txt		    // 比较工作区与暂存区(已add但未commit文件)的差异
+$ git diff HEAD a.txt		// 比较工作区与本地仓库的差异
+$ git diff --cached a.txt	// 比较暂存区与本地仓库的差异
 ```
 
 20. doxygen 使用
-```
+```shell
 $ cd /home/bread/workspace/awesome-sylar
 $ doxygen -g -s         // 生成 Doxyfile 文件，-s为simple，-g为generate
 注意要修改 vim Doxyfile 其中的属性 RECURSIVE = YES
@@ -355,7 +356,7 @@ $ doxygen               // 生成两个文件夹 html 和 latex
 ```
 
 21. 代码补全设置
-```
+```shell
 1. 假设项目代码在 /home/bread/workspace/awesome-sylar，则在该目录下执行
 $ vctags
 会在该目录下生成 tags 文件
@@ -367,7 +368,7 @@ set tags+=~/workspace/awesome-sylar
 ```
 
 22. 配置DoxygenToolkit.vim
-```
+```shell
 $ git clone https://github.com/vim-scripts/DoxygenToolkit.vim
 $ cd DoxygenToolkit.vim
 $ cd plugin
@@ -392,6 +393,6 @@ let g:DoxygenToolkit_authorTag = "@author\t"
 ```
 
 23. 安装 man 手册
-```
+```shell
 $ sudo yum install man-pages
 ```
