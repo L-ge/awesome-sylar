@@ -270,6 +270,7 @@ HttpResponseParser::HttpResponseParser()
 
 size_t HttpResponseParser::execute(char* data, size_t len, bool chunck)
 {
+    // 如果是分段的，就重新初始化一下它里面的数据，把它数据置空(清掉解析的上下文)再往下执行
     if(chunck)
     {
         httpclient_parser_init(&m_parser);

@@ -68,7 +68,6 @@ public:
     void writeFint64(int64_t value);
     void writeFuint64(uint64_t value);
 
-
     /**
      * @brief  写入可压缩(Zigzag算法)的字符串数据 
      */
