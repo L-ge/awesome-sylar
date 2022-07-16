@@ -48,5 +48,7 @@
 		$ mv http11_parser.cc http11_parser.rl.cc			  // 与自己写的代码区分开
 		$ mv httpclient_parser.cc httpclient_parser.rl.cc     // 与自己写的代码区分开
 		```
-	- 注意，sylar 对拷贝回来的几个文件做了一些修改，使其编译通过和支持“分段解析”的功能。
+	- 注意，sylar 对拷贝回来的几个文件做了一些修改，使其编译通过、支持“分段解析协议”的功能、支持中文的功能。
 - http.h 中 HttpRequest 和 HttpResponse 的 dump 方法里面组装出来的字符串其实就是 http 报文了。
+- 关于 HTTP 请求和响应的格式可参考如下地址：
+	`https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Messages`
