@@ -396,3 +396,12 @@ let g:DoxygenToolkit_authorTag = "@author\t"
 ```shell
 $ sudo yum install man-pages
 ```
+
+24. 安装 Zlib
+```
+$ cd /soft
+$ wget http://www.zlib.net/fossils/zlib-1.2.11.tar.gz
+$ tar xvf zlib-1.2.11.tar.gz
+$ ./configure --prefix=/apps/bread
+$ make & make install
+```
