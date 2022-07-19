@@ -1,5 +1,7 @@
 #include "filestream_util.h"
 #include <dirent.h>
+#include <sys/types.h>
+#include <signal.h>
 
 namespace sylar
 {
@@ -114,7 +116,7 @@ void FSUtil::ListAllFile(std::vector<std::string>& files, const std::string& pat
         if(dp->d_type == DT_DIR)
         {
             if(!strcmp(dp->d_name, ".")
-                    || !strcmp(dp->d_name, "."))
+                    || !strcmp(dp->d_name, ".."))
             {
                 continue;
             }
@@ -152,6 +154,34 @@ bool FSUtil::Unlink(const std::string& filename, bool exist)
     // unlink函数：从文件系统中删除一个名称。
     // 如果名称是文件的最后一个连接，并且没有其他进程将文件打开，名称对应的文件会实际被删除。
     return ::unlink(filename.c_str()) == 0;
+}
+
+bool FSUtil::IsRunningPidfile(const std::string& pidfile) 
+{
+    if(__lstat(pidfile.c_str()) != 0) 
+    {
+        return false;
+    }
+    std::ifstream ifs(pidfile);
+    std::string line;
+    if(!ifs || !std::getline(ifs, line)) 
+    {
+        return false;
+    }
+    if(line.empty()) 
+    {
+        return false;
+    }
+    pid_t pid = atoi(line.c_str());
+    if(pid <= 1) 
+    {
+        return false;
+    }
+    if(kill(pid, 0) != 0)
+    {
+        return false;
+    }
+    return true;
 }
 
 }

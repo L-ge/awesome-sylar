@@ -47,6 +47,8 @@ set(LIB_SRC
     sylar/streams/zlib_stream.cc
     sylar/uri.rl.cc
     sylar/daemon.cc
+    sylar/env.cc
+    sylar/application.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -110,6 +112,14 @@ target_link_libraries(test_http_connection sylar)
 add_executable(test_daemon tests/test_daemon.cc)
 add_dependencies(test_daemon sylar)
 target_link_libraries(test_daemon sylar)
+
+add_executable(test_env tests/test_env.cc)
+add_dependencies(test_env sylar)
+target_link_libraries(test_env sylar)
+
+add_executable(test_application tests/test_application.cc)
+add_dependencies(test_application sylar)
+target_link_libraries(test_application sylar)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
