@@ -405,3 +405,23 @@ $ tar xvf zlib-1.2.11.tar.gz
 $ ./configure --prefix=/apps/bread
 $ make & make install
 ```
+
+25. 安装 redis
+```shell
+$ cd /soft
+$ wget https://download.redis.io/releases/redis-5.0.14.tar.gz
+$ tar xvf redis-5.0.14.tar.gz
+$ cd redis-5.0.14
+$ make			// 如果make失败报错缺失jemalloc，可以先make distclean
+$ make test
+$ cd /soft
+$ wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz 
+$ cd tcl8.6.1
+$ ./configure --prefix=/apps/bread
+$ make  
+$ make install
+$ cd /soft/redis-5.0.14
+$ make test
+$ make install PREFIX=/apps/bread 		// 把redis安装到系统中(PREFIX为安装路径)
+$ which redis
+```
