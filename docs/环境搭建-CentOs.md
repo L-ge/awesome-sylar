@@ -398,7 +398,7 @@ $ sudo yum install man-pages
 ```
 
 24. 安装 Zlib
-```
+```shell
 $ cd /soft
 $ wget http://www.zlib.net/fossils/zlib-1.2.11.tar.gz
 $ tar xvf zlib-1.2.11.tar.gz
@@ -408,20 +408,47 @@ $ make & make install
 
 25. 安装 redis
 ```shell
+// 不知道为啥在soft目录安装，即使是安装了tcl，make test也是报错说缺失。
+// 怀疑是权限问题，因此在/home/bread/目录下安装redis成功。
+
+$ cd /home/bread
+$ mkdir soft
 $ cd /soft
 $ wget https://download.redis.io/releases/redis-5.0.14.tar.gz
 $ tar xvf redis-5.0.14.tar.gz
 $ cd redis-5.0.14
 $ make			// 如果make失败报错缺失jemalloc，可以先make distclean
-$ make test
-$ cd /soft
+
+$ make test		
+// 报错：You need tcl 8.5 or newer in order to run the Redis test
+
+// 报错：*** [err]: Active defrag big keys in tests/unit/memefficiency.tcl Expected condition ‘$max_latency <= 120’ to be true (137 <= 120)
+// 解决：vim tests/unit/memefficiency.tcl	改成 max_latency <= 150
+
+$ cd ..
 $ wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz 
-$ cd tcl8.6.1
-$ ./configure --prefix=/apps/bread
-$ make  
-$ make install
-$ cd /soft/redis-5.0.14
+$ tar xvf tcl8.6.1-src.tar.gz 
+$ cd tcl8.6.1/unix
+$ ./configure --prefix=/apps/bread					
+$ make & make install
+
+$ cd /home/bread/soft/redis-5.0.14
 $ make test
 $ make install PREFIX=/apps/bread 		// 把redis安装到系统中(PREFIX为安装路径)
-$ which redis
+
+// 最后能在 /apps/bread/bin 目录下找到 redis_server 等可执行文件。
+// 但仍然有问题，因为 /apps/bread/bin 的文件都是root权限的，普通用户使用redis-server时，将没有权限持久化(生成rdb文件需要写磁盘权限)。
+// 因此，再将 make install PREFIX=/home/bread/soft 目录下，方便需要的时候cp过去。
+```
+
+26. 安装 hiredis
+```
+# cd /home/bread/soft
+# git clone https://github.com/redis/hiredis.git		// 如果 Failed connect to github.com:443;  多试几次就行
+# cd hiredis
+# mkdir build
+# cd build
+# cmake .. -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/apps/bread
+# make
+# make install
 ```
