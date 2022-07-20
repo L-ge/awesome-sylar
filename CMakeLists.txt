@@ -121,5 +121,13 @@ add_executable(test_application tests/test_application.cc)
 add_dependencies(test_application sylar)
 target_link_libraries(test_application sylar)
 
+add_executable(echo_server examples/echo_server.cc)
+add_dependencies(echo_server sylar)
+target_link_libraries(echo_server sylar)
+
+add_executable(my_http_server examples/my_http_server.cc)
+add_dependencies(my_http_server sylar)
+target_link_libraries(my_http_server sylar)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
