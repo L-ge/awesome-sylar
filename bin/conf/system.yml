@@ -1,0 +1,4 @@
+server:
+    work_path: /home/bread/workspace/awesome-sylar/bin/tmp
+    pid_file: sylar.pid
+
