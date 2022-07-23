@@ -81,7 +81,7 @@ public:
         conf.ssl            = node["ssl"].as<int>(conf.ssl);
         conf.cert_file      = node["cert_file"].as<std::string>(conf.cert_file);
         conf.key_file       = node["key_file"].as<std::string>(conf.key_file);
-        conf.accept_worker  = node["accpept_worker"].as<std::string>();
+        conf.accept_worker  = node["accept_worker"].as<std::string>();
         conf.io_worker      = node["io_worker"].as<std::string>();
         conf.process_worker = node["process_worker"].as<std::string>();
         conf.args           = LexicalCast<std::string
@@ -112,7 +112,7 @@ public:
         node["ssl"]             = conf.ssl;
         node["cert_file"]       = conf.cert_file;
         node["key_file"]        = conf.key_file;
-        node["accpept_worker"]  = conf.accept_worker;
+        node["accept_worker"]  = conf.accept_worker;
         node["io_worker"]       = conf.io_worker;
         node["process_worker"]  = conf.process_worker;
         node["args"]            = YAML::Load(LexicalCast<

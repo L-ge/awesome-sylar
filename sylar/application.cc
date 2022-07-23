@@ -8,7 +8,7 @@
 #include "sylar/config.h"
 #include "sylar/env.h"
 #include "sylar/log.h"
-//#include "sylar/module.h"
+#include "sylar/module.h"
 //#include "sylar/rock/rock_stream.h"
 //#include "sylar/worker.h"
 //#include "sylar/http/ws_server.h"
@@ -73,13 +73,13 @@ bool Application::init(int argc, char** argv)
     SYLAR_LOG_INFO(g_logger) << "load conf path:" << conf_path;
     sylar::Config::LoadFromConfDir(conf_path);
 
-    //ModuleMgr::GetInstance()->init();
-    //std::vector<Module::ptr> modules;
-    //ModuleMgr::GetInstance()->listAll(modules);
-    //for(auto i : modules) 
-    //{
-    //    i->onBeforeArgsParse(argc, argv);
-    //}
+    ModuleMgr::GetInstance()->init();
+    std::vector<Module::ptr> modules;
+    ModuleMgr::GetInstance()->listAll(modules);
+    for(auto i : modules) 
+    {
+        i->onBeforeArgsParse(argc, argv);
+    }
 
     if(is_print_help) 
     {
@@ -87,11 +87,11 @@ bool Application::init(int argc, char** argv)
         return false;
     }
 
-    //for(auto i : modules) 
-    //{
-    //    i->onAfterArgsParse(argc, argv);
-    //}
-    //modules.clear();
+    for(auto i : modules) 
+    {
+        i->onAfterArgsParse(argc, argv);
+    }
+    modules.clear();
 
     //是否以守护进程的方式运行
     int run_type = 0;
@@ -164,23 +164,24 @@ int Application::main(int argc, char** argv)
 
 int Application::run_fiber() 
 {
-    //std::vector<Module::ptr> modules;
-    //ModuleMgr::GetInstance()->listAll(modules);
-    //bool has_error = false;
-    //for(auto& i : modules) 
-    //{
-    //    if(!i->onLoad()) 
-    //    {
-    //        SYLAR_LOG_ERROR(g_logger) << "module name="
-    //            << i->getName() << " version=" << i->getVersion()
-    //            << " filename=" << i->getFilename();
-    //        has_error = true;
-    //    }
-    //}
-    //if(has_error) 
-    //{
-    //    _exit(0);
-    //}
+    SYLAR_LOG_INFO(g_logger) << "run_fiber";
+    std::vector<Module::ptr> modules;
+    ModuleMgr::GetInstance()->listAll(modules);
+    bool has_error = false;
+    for(auto& i : modules) 
+    {
+        if(!i->onLoad()) 
+        {
+            SYLAR_LOG_ERROR(g_logger) << "module name="
+                << i->getName() << " version=" << i->getVersion()
+                << " filename=" << i->getFilename();
+            has_error = true;
+        }
+    }
+    if(has_error) 
+    {
+        _exit(0);
+    }
 
     //sylar::WorkerMgr::GetInstance()->init();
     //FoxThreadMgr::GetInstance()->init();
@@ -199,7 +200,6 @@ int Application::run_fiber()
             size_t pos = a.find(":");
             if(pos == std::string::npos)
             {
-                //SYLAR_LOG_ERROR(g_logger) << "invalid address: " << a;
                 address.push_back(UnixAddress::ptr(new UnixAddress(a)));
                 continue;
             }
@@ -324,8 +324,10 @@ int Application::run_fiber()
         //            << i.cert_file << " key_file=" << i.key_file;
         //    }
         //}
+        
+        SYLAR_LOG_INFO(g_logger) << "server push:" << i.type;
+
         server->setConf(i);
-        //server->start();
         m_servers[i.type].push_back(server);
         svrs.push_back(server);
     }
@@ -377,25 +379,25 @@ int Application::run_fiber()
     //    }
     //}
 
-    //for(auto& i : modules) 
-    //{
-    //    i->onServerReady();
-    //}
+    for(auto& i : modules) 
+    {
+        i->onServerReady();
+    }
 
-    //for(auto& i : svrs) 
-    //{
-    //    i->start();
-    //}
+    for(auto& i : svrs) 
+    {
+        i->start();
+    }
 
     //if(m_rockSDLoadBalance)
     //{
     //    m_rockSDLoadBalance->start();
     //}
 
-    //for(auto& i : modules)
-    //{
-    //    i->onServerUp();
-    //}
+    for(auto& i : modules)
+    {
+        i->onServerUp();
+    }
     return 0;
 }
 

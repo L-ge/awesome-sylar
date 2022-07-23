@@ -184,4 +184,52 @@ bool FSUtil::IsRunningPidfile(const std::string& pidfile)
     return true;
 }
 
+bool FSUtil::Rm(const std::string& path)
+{
+    struct stat st;
+    if(lstat(path.c_str(), &st)) 
+    {
+        return true;
+    }
+    
+    if(!(st.st_mode & S_IFDIR))
+    {
+        return Unlink(path);
+    }
+
+    DIR* dir = opendir(path.c_str());
+    if(!dir) 
+    {
+        return false;
+    }
+    
+    bool ret = true;
+    struct dirent* dp = nullptr;
+    while((dp = readdir(dir)))
+    {
+        if(!strcmp(dp->d_name, ".")
+                || !strcmp(dp->d_name, "..")) 
+        {
+            continue;
+        }
+        std::string dirname = path + "/" + dp->d_name;
+        ret = Rm(dirname);
+    }
+    closedir(dir);
+    if(::rmdir(path.c_str()))
+    {
+        ret = false;
+    }
+    return ret;
+}
+
+bool FSUtil::Mv(const std::string& from, const std::string& to)
+{
+    if(!Rm(to))
+    {
+        return false;
+    }
+    return rename(from.c_str(), to.c_str()) == 0;
+}
+
 }

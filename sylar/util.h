@@ -5,5 +5,7 @@
 #include "util/system_util.h"
 #include "util/language_util.h"
 #include "util/string_util.h"
+#include "util/json_util.h"
+#include "util/type_util.h"
 
 #endif

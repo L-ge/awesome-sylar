@@ -30,6 +30,8 @@ public:
     static void ListAllFile(std::vector<std::string>& files, const std::string& path, const std::string& subfix);
     static bool Unlink(const std::string& filename, bool exist = false);
     static bool IsRunningPidfile(const std::string& pidfile);
+    static bool Rm(const std::string& path);
+    static bool Mv(const std::string& from, const std::string& to);
 };
 
 }

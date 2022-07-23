@@ -4,11 +4,12 @@ project(awesome-sylar)
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -O0 -fPIC -std=c++11 -ggdb -Wall -Werror -pthread -lyaml-cpp -ldl -lz")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -rdynamic -O0 -fPIC -std=c++11 -ggdb -Wall -Werror -Wno-deprecated-declarations -pthread -lyaml-cpp -ldl -lz -ljsoncpp")
 
 include_directories(.)
 include_directories(/apps/bread/include)
 link_directories(/apps/bread/lib)
+link_directories(/apps/bread/lib64)
 
 find_package(Boost REQUIRED)
 if(Boost_FOUND)
@@ -49,6 +50,11 @@ set(LIB_SRC
     sylar/daemon.cc
     sylar/env.cc
     sylar/application.cc
+    sylar/module.cc
+    sylar/library.cc
+    sylar/protocol.cc
+    sylar/util/json_util.cc
+    sylar/util/type_util.cc
     )
 
 add_library(sylar SHARED ${LIB_SRC})
@@ -128,6 +134,10 @@ target_link_libraries(echo_server sylar)
 add_executable(my_http_server examples/my_http_server.cc)
 add_dependencies(my_http_server sylar)
 target_link_libraries(my_http_server sylar)
+
+add_executable(bin_sylar sylar/main.cc)
+add_dependencies(bin_sylar sylar)
+target_link_libraries(bin_sylar sylar)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
