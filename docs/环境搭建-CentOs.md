@@ -448,7 +448,23 @@ $ make install PREFIX=/apps/bread 		// 把redis安装到系统中(PREFIX为安�
 # cd hiredis
 # mkdir build
 # cd build
-# cmake .. -DYAML_BUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/apps/bread
+# cmake .. -DCMAKE_INSTALL_PREFIX=/apps/bread
 # make
 # make install
+```
+
+27. 安装 json-cpp
+```
+// 用这个版本会有问题：https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz
+// 报错 ../lib/libsylar.so：对‘Json::Value::isMember(std::string const&) const’未定义的引用
+// 原因未知
+# cd /home/bread/soft
+# wget https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/00.11.0.tar.gz
+# tar xvf 00.11.0.tar.gz
+# cd jsoncpp-00.11.0
+# mkdir build
+# cd build
+# source /etc/profile
+# cmake .. -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/apps/bread
+# make -j4 & make install
 ```
