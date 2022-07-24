@@ -442,7 +442,7 @@ $ make install PREFIX=/apps/bread 		// 把redis安装到系统中(PREFIX为安�
 ```
 
 26. 安装 hiredis
-```
+```shell
 # cd /home/bread/soft
 # git clone https://github.com/redis/hiredis.git		// 如果 Failed connect to github.com:443;  多试几次就行
 # cd hiredis
@@ -454,7 +454,7 @@ $ make install PREFIX=/apps/bread 		// 把redis安装到系统中(PREFIX为安�
 ```
 
 27. 安装 json-cpp
-```
+```shell
 // 用这个版本会有问题：https://github.com/open-source-parsers/jsoncpp/archive/refs/tags/1.9.5.tar.gz
 // 报错 ../lib/libsylar.so：对‘Json::Value::isMember(std::string const&) const’未定义的引用
 // 原因未知
